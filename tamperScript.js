@@ -9,29 +9,30 @@
 // ==/UserScript==
 
 //pSBC Color Shade/Blend/Convert tool (V4). Source: https://github.com/PimpTrizkit/PJs/wiki/12.-Shade,-Blend-and-Convert-a-Web-Color-(pSBC.js)
-const pSBC=(p,c0,c1,l)=>{
-    let r,g,b,P,f,t,h,i=parseInt,m=Math.round,a=typeof(c1)=="string";
-    if(typeof(p)!="number"||p<-1||p>1||typeof(c0)!="string"||(c0[0]!='r'&&c0[0]!='#')||(c1&&!a))return null;
-    if(!this.pSBCr)this.pSBCr=(d)=>{
-        let n=d.length,x={};
-        if(n>9){
-            [r,g,b,a]=d=d.split(","),n=d.length;
-            if(n<3||n>4)return null;
-            x.r=i(r[3]=="a"?r.slice(5):r.slice(4)),x.g=i(g),x.b=i(b),x.a=a?parseFloat(a):-1
-        }else{
-            if(n==8||n==6||n<4)return null;
-            if(n<6)d="#"+d[1]+d[1]+d[2]+d[2]+d[3]+d[3]+(n>4?d[4]+d[4]:"");
-            d=i(d.slice(1),16);
-            if(n==9||n==5)x.r=d>>24&255,x.g=d>>16&255,x.b=d>>8&255,x.a=m((d&255)/0.255)/1000;
-            else x.r=d>>16,x.g=d>>8&255,x.b=d&255,x.a=-1
-        }return x};
-    h=c0.length>9,h=a?c1.length>9?true:c1=="c"?!h:false:h,f=this.pSBCr(c0),P=p<0,t=c1&&c1!="c"?this.pSBCr(c1):P?{r:0,g:0,b:0,a:-1}:{r:255,g:255,b:255,a:-1},p=P?p*-1:p,P=1-p;
-    if(!f||!t)return null;
-    if(l)r=m(P*f.r+p*t.r),g=m(P*f.g+p*t.g),b=m(P*f.b+p*t.b);
-    else r=m((P*f.r**2+p*t.r**2)**0.5),g=m((P*f.g**2+p*t.g**2)**0.5),b=m((P*f.b**2+p*t.b**2)**0.5);
-    a=f.a,t=t.a,f=a>=0||t>=0,a=f?a<0?t:t<0?a:a*P+t*p:0;
-    if(h)return"rgb"+(f?"a(":"(")+r+","+g+","+b+(f?","+m(a*1000)/1000:"")+")";
-    else return"#"+(4294967296+r*16777216+g*65536+b*256+(f?m(a*255):0)).toString(16).slice(1,f?undefined:-2)
+const pSBC = (p, c0, c1, l) => {
+    let r, g, b, P, f, t, h, i = parseInt, m = Math.round, a = typeof (c1) == "string";
+    if (typeof (p) != "number" || p < -1 || p > 1 || typeof (c0) != "string" || (c0[0] != 'r' && c0[0] != '#') || (c1 && !a)) return null;
+    if (!this.pSBCr) this.pSBCr = (d) => {
+        let n = d.length, x = {};
+        if (n > 9) {
+            [r, g, b, a] = d = d.split(","), n = d.length;
+            if (n < 3 || n > 4) return null;
+            x.r = i(r[3] == "a" ? r.slice(5) : r.slice(4)), x.g = i(g), x.b = i(b), x.a = a ? parseFloat(a) : -1
+        } else {
+            if (n == 8 || n == 6 || n < 4) return null;
+            if (n < 6) d = "#" + d[1] + d[1] + d[2] + d[2] + d[3] + d[3] + (n > 4 ? d[4] + d[4] : "");
+            d = i(d.slice(1), 16);
+            if (n == 9 || n == 5) x.r = d >> 24 & 255, x.g = d >> 16 & 255, x.b = d >> 8 & 255, x.a = m((d & 255) / 0.255) / 1000;
+            else x.r = d >> 16, x.g = d >> 8 & 255, x.b = d & 255, x.a = -1
+        } return x
+    };
+    h = c0.length > 9, h = a ? c1.length > 9 ? true : c1 == "c" ? !h : false : h, f = this.pSBCr(c0), P = p < 0, t = c1 && c1 != "c" ? this.pSBCr(c1) : P ? { r: 0, g: 0, b: 0, a: -1 } : { r: 255, g: 255, b: 255, a: -1 }, p = P ? p * -1 : p, P = 1 - p;
+    if (!f || !t) return null;
+    if (l) r = m(P * f.r + p * t.r), g = m(P * f.g + p * t.g), b = m(P * f.b + p * t.b);
+    else r = m((P * f.r ** 2 + p * t.r ** 2) ** 0.5), g = m((P * f.g ** 2 + p * t.g ** 2) ** 0.5), b = m((P * f.b ** 2 + p * t.b ** 2) ** 0.5);
+    a = f.a, t = t.a, f = a >= 0 || t >= 0, a = f ? a < 0 ? t : t < 0 ? a : a * P + t * p : 0;
+    if (h) return "rgb" + (f ? "a(" : "(") + r + "," + g + "," + b + (f ? "," + m(a * 1000) / 1000 : "") + ")";
+    else return "#" + (4294967296 + r * 16777216 + g * 65536 + b * 256 + (f ? m(a * 255) : 0)).toString(16).slice(1, f ? undefined : -2)
 }
 (function () {
     'use strict';
@@ -78,9 +79,9 @@ const pSBC=(p,c0,c1,l)=>{
 
         fixSlotManagerColors();
 
-        restyleImgIcons();
+        // restyleImgIcons();
 
-        console.log(`DarkMode main exec time: ${performance.now()-startTime} ms`);
+        console.log(`DarkMode main exec time: ${performance.now() - startTime} ms`);
     }
 
     function getCharColor() {
@@ -114,7 +115,7 @@ const pSBC=(p,c0,c1,l)=>{
         }`);
         // Ability Scores Recolor
         sheet.insertRule(
-        `.ddbc-ability-summary__primary,
+            `.ddbc-ability-summary__primary,
         .ct-proficiency-bonus-box__value .ddbc-signed-number.ddbc-signed-number--large,
         .ct-proficiency-bonus-box .ct-proficiency-bonus-box__heading,
         .ddbc-item-name--rarity-common,
@@ -133,7 +134,7 @@ const pSBC=(p,c0,c1,l)=>{
             color: #e4e5e7 !important;
         }`);
         sheet.insertRule(
-        `.ct-class-spell-manager__info,
+            `.ct-class-spell-manager__info,
         .ddbc-html-content p,
         .ct-sidebar__pane-content > *,
         .ct-campaign-pane a {
@@ -143,12 +144,12 @@ const pSBC=(p,c0,c1,l)=>{
         // Restyling Accent/Element bg colors
         // #f1f1f1 -> #434343
         sheet.insertRule(
-        `div.ddbc-collapsible__header {
+            `div.ddbc-collapsible__header {
             background-color: #434343;
         }`);
         // #f2f2f2 -> #424242;
         sheet.insertRule(
-        `.ddbc-tab-options--layout-pill div.ddbc-tab-options__header-heading,
+            `.ddbc-tab-options--layout-pill div.ddbc-tab-options__header-heading,
         div.ct-spell-detail__tag,
         div.ct-item-detail__tag {
             background-color: #424242;
@@ -156,32 +157,32 @@ const pSBC=(p,c0,c1,l)=>{
 
         // Attacks per Action text: convert to secondary color
         sheet.insertRule(
-        `span.ct-actions__attacks-per-action {
+            `span.ct-actions__attacks-per-action {
             color: #838383;
         }`
         );
         // BG #ffffff -> #353535
         sheet.insertRule(
-        `.site button.ct-health-summary__adjuster-button,
+            `.site button.ct-health-summary__adjuster-button,
         input.ct-health-summary__adjuster-field-input {
             background-color: ${colorReplacements["#ffffff"]} !important;
         }`);
 
         // Tables
-            //#fff -> #353535
+        //#fff -> #353535
         sheet.insertRule(
-        `.ct-sidebar td {
+            `.ct-sidebar td {
             background: ${colorReplacements["#ffffff"]} !important;
         }`)
-            //#faf8f7 ->
+        //#faf8f7 ->
         sheet.insertRule(
-        `.ct-sidebar tr:nth-child(odd) td {
+            `.ct-sidebar tr:nth-child(odd) td {
             background: ${colorReplacements["#faf8f7"]} !important;
         }`)
 
         // Collapsible Content Bg
         sheet.insertRule(
-        `.ddbc-collapsible__content {
+            `.ddbc-collapsible__content {
             background-color: #383838 !important;
         }`);
         // SVG Backgrounds
@@ -249,7 +250,7 @@ const pSBC=(p,c0,c1,l)=>{
         }`)
 
         sheet.insertRule(//.ct-skills__col--modifier
-        `.beyond20-quick-roll-area:hover {
+            `.beyond20-quick-roll-area:hover {
             background-color: ${accentColorMuted};
         }
         `);
@@ -359,13 +360,13 @@ const pSBC=(p,c0,c1,l)=>{
     }
 
     function createStyleSheet(id, media) {
-        var el   = document.createElement('style');
+        var el = document.createElement('style');
         // WebKit hack
         el.appendChild(document.createTextNode(''));
         // el.type  = 'text/css';
-        el.rel   = 'stylesheet';
+        el.rel = 'stylesheet';
         el.media = media || 'screen';
-        el.id    = id;
+        el.id = id;
         document.head.appendChild(el);
         return el.sheet;
     }
