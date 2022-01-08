@@ -92,7 +92,6 @@ const pSBC = (p, c0, c1, l) => {
         // Create Stylesheet
         sheet = createStyleSheet('dark-mode-userscript');
 
-
         // Background
         sheet.insertRule(`body {
             background: #222222 !important;
@@ -129,7 +128,8 @@ const pSBC = (p, c0, c1, l) => {
         .ct-spells-filter__input,
         .ct-feats-manage-pane__feat-heading-name,
         .ct-sidebar__heading,
-        .ct-health-summary__adjuster-field-input
+        .ct-health-summary__adjuster-field-input,
+        .collapsible-heading
         {
             color: #e4e5e7 !important;
         }`);
@@ -211,6 +211,11 @@ const pSBC = (p, c0, c1, l) => {
         sheet.insertRule(`span.ddbc-no-proficiency-icon {
             background-color: inherit;
         }`)
+
+        sheet.insertRule(`.ct-skills__list {
+            overflow-y: auto;
+            max-height: min-content !important;
+        }`);
     }
 
     // function recolorElements(elems) {
